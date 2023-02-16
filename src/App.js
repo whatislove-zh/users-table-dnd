@@ -1,5 +1,13 @@
+import { SelectColums } from "./components/SelectColums";
+import { UsersTable } from "./components/UsersTable";
+
 function App() {
-  return <div className="App">Hello world</div>;
+  return (
+    <>
+      <SelectColums />
+      <UsersTable />
+    </>
+  );
 }
 
 export default App;
