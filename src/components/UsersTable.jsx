@@ -8,14 +8,14 @@ import {
   TableCell,
   TableBody,
 } from "@mui/material";
+import { useSelector } from "react-redux";
 import { useUsers } from "../store/get-users/use-users";
+import { removedColumnUtil } from "../utils/available";
 
 export const UsersTable = () => {
   const [users, status, error] = useUsers();
+  const selectedColumn = useSelector((state) => state.selectedColumn);
 
-  
-
-  console.log(users, status, error);
   return (
     <Box>
       {status === "loading" && <Typography>Loading...</Typography>}
@@ -25,26 +25,59 @@ export const UsersTable = () => {
           <Table>
             <TableHead>
               <TableRow>
-                {Object.keys(users[0]).map((user) => (
-                  <TableCell align="right" key={user}>
+                {selectedColumn.map((user) => (
+                  <TableCell align="left" key={user}>
                     {user}
                   </TableCell>
                 ))}
               </TableRow>
             </TableHead>
             <TableBody>
-              {users.map((user) => (
-                <TableRow key={user.id}>
-                  <TableCell align="right">{user?.id}</TableCell>
-                  <TableCell align="right">{user?.name}</TableCell>
-                  <TableCell align="right">{user?.username}</TableCell>
-                  <TableCell align="right">{user?.email}</TableCell>
-                  <TableCell align="right">{user?.address?.city}</TableCell>
-                  <TableCell align="right">{user?.phone}</TableCell>
-                  <TableCell align="right">{user?.website}</TableCell>
-                  <TableCell align="right">{user?.company?.name}</TableCell>
-                </TableRow>
-              ))}
+              {users.map((user) => {
+                const [availableColumns] = removedColumnUtil(
+                  users[0],
+                  selectedColumn
+                );
+                const [, visibleUser] = removedColumnUtil(
+                  user,
+                  availableColumns
+                );
+
+                return (
+                  <TableRow key={user.id}>
+                    {visibleUser?.id && (
+                      <TableCell align="left">{visibleUser?.id}</TableCell>
+                    )}
+                    {visibleUser?.name && (
+                      <TableCell align="left">{visibleUser?.name}</TableCell>
+                    )}
+                    {visibleUser?.username && (
+                      <TableCell align="left">
+                        {visibleUser?.username}
+                      </TableCell>
+                    )}
+                    {visibleUser?.email && (
+                      <TableCell align="left">{visibleUser?.email}</TableCell>
+                    )}
+                    {visibleUser?.address?.city && (
+                      <TableCell align="left">
+                        {visibleUser?.address?.city}
+                      </TableCell>
+                    )}
+                    {visibleUser?.phone && (
+                      <TableCell align="left">{visibleUser?.phone}</TableCell>
+                    )}
+                    {visibleUser?.website && (
+                      <TableCell align="left">{visibleUser?.website}</TableCell>
+                    )}
+                    {visibleUser?.company?.name && (
+                      <TableCell align="left">
+                        {visibleUser?.company?.name}
+                      </TableCell>
+                    )}
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </TableContainer>
