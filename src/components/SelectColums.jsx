@@ -11,7 +11,7 @@ export const SelectColums = () => {
 
   return (
     <>
-      <Button onClick={() => dispatch(setModal(true))}>Select Colums</Button>
+      <Button onClick={() => dispatch(setModal(true))} sx={{my:"15px", background:"#FCA311", color:"#1B2021", "&:hover":{background:"#c37d0e"}}}>Select Colums</Button>
       {isModalOpen && <Modal />}
     </>
   );
