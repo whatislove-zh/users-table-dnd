@@ -2,12 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const selectedColumnsSlice = createSlice({
   name: "@@columns",
-  initialState: ["name", "username", "email", "phone"],
+  initialState: ["name", "username", "email", "address"],
   reducers: {
-    addColumn: (state, action) => {state.push(action.payload)}
+    setColumn: (_, action) => action.payload
   },
 });
 
 export const selectedColumnsReducer = selectedColumnsSlice.reducer;
 
-export const { addColumn } = selectedColumnsSlice.actions;
+export const { setColumn } = selectedColumnsSlice.actions;
