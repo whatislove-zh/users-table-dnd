@@ -1,5 +1,13 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  
 }
+body {
+
+  background: linear-gradient(90deg,rgba(20, 33, 61, 1) 0%,rgba(252, 163, 17, 1) 100%);
+}
+
+
+
