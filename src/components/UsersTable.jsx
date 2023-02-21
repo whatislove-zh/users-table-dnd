@@ -12,9 +12,14 @@ import { useSelector } from "react-redux";
 import { useUsers } from "../store/get-users/use-users";
 import { removedColumnUtil } from "../utils/available";
 
+const tableCellStyle = { color: "white" };
+
 export const UsersTable = () => {
   const [users, status, error] = useUsers();
   const selectedColumn = useSelector((state) => state.selectedColumn);
+
+  const selectedColumnSort = [].concat(selectedColumn).sort();
+  
 
   return (
     <Box>
@@ -22,12 +27,12 @@ export const UsersTable = () => {
       {error && <Typography>{error}</Typography>}
       {status === "received" && (
         <TableContainer>
-          <Table>
-            <TableHead>
+          <Table sx={{ overflow: "auto" }}>
+            <TableHead sx={{ background: "#30343F" }}>
               <TableRow>
-                {selectedColumn.map((user) => (
-                  <TableCell align="left" key={user}>
-                    {user}
+                {selectedColumnSort.map((user) => (
+                  <TableCell sx={tableCellStyle} align="center" key={user}>
+                    {user.toUpperCase()}
                   </TableCell>
                 ))}
               </TableRow>
@@ -45,34 +50,46 @@ export const UsersTable = () => {
 
                 return (
                   <TableRow key={user.id}>
-                    {visibleUser?.id && (
-                      <TableCell align="left">{visibleUser?.id}</TableCell>
-                    )}
-                    {visibleUser?.name && (
-                      <TableCell align="left">{visibleUser?.name}</TableCell>
-                    )}
-                    {visibleUser?.username && (
-                      <TableCell align="left">
-                        {visibleUser?.username}
-                      </TableCell>
-                    )}
-                    {visibleUser?.email && (
-                      <TableCell align="left">{visibleUser?.email}</TableCell>
-                    )}
                     {visibleUser?.address?.city && (
-                      <TableCell align="left">
+                      <TableCell sx={tableCellStyle} align="center">
                         {visibleUser?.address?.city}
                       </TableCell>
                     )}
-                    {visibleUser?.phone && (
-                      <TableCell align="left">{visibleUser?.phone}</TableCell>
-                    )}
-                    {visibleUser?.website && (
-                      <TableCell align="left">{visibleUser?.website}</TableCell>
-                    )}
                     {visibleUser?.company?.name && (
-                      <TableCell align="left">
+                      <TableCell sx={tableCellStyle} align="center">
                         {visibleUser?.company?.name}
+                      </TableCell>
+                    )}
+                    {visibleUser?.email && (
+                      <TableCell sx={tableCellStyle} align="center">
+                        {visibleUser?.email}
+                      </TableCell>
+                    )}
+                    {visibleUser?.id && (
+                      <TableCell sx={tableCellStyle} align="center">
+                        {visibleUser?.id}
+                      </TableCell>
+                    )}
+                    {visibleUser?.name && (
+                      <TableCell sx={tableCellStyle} align="center">
+                        {visibleUser?.name}
+                      </TableCell>
+                    )}
+                    {visibleUser?.phone && (
+                      <TableCell sx={tableCellStyle} align="center">
+                        {visibleUser?.phone}
+                      </TableCell>
+                    )}
+
+                    {visibleUser?.username && (
+                      <TableCell sx={tableCellStyle} align="center">
+                        {visibleUser?.username}
+                      </TableCell>
+                    )}
+
+                    {visibleUser?.website && (
+                      <TableCell sx={tableCellStyle} align="center">
+                        {visibleUser?.website}
                       </TableCell>
                     )}
                   </TableRow>
